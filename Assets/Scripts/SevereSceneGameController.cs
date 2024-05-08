@@ -14,11 +14,17 @@ public class SevereSceneGameController : MonoBehaviour
     private GameObject answeringCanvas;
     [SerializeField]
     private GameObject interactableAnswer;
-
+    private GameObject choice1;
+    private GameObject choice2;
 
     private TextMeshProUGUI readingTimeText;
     private TextMeshProUGUI answeringTimeText;
     private TextMeshProUGUI answerText;
+    private Vector3 choice1Position;
+    private Vector3 choice2Position;
+    // Rotation of choice 1 and choice 2
+    private Vector3 choice1Rotation;
+    private Vector3 choice2Rotation;
 
     private List<string> answersLog = new List<string>();
     private float timeLeft;
@@ -28,6 +34,12 @@ public class SevereSceneGameController : MonoBehaviour
         readingTimeText = readingCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
         answeringTimeText = answeringCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
         answerText = answeringCanvas.transform.Find("Answer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        choice1 = interactableAnswer.transform.Find("Choice 1").gameObject;
+        choice2 = interactableAnswer.transform.Find("Choice 2").gameObject;
+        choice1Position = choice1.transform.position;
+        choice2Position = choice2.transform.position;
+        choice1Rotation = choice1.transform.rotation.eulerAngles;
+        choice2Rotation = choice2.transform.rotation.eulerAngles;
 
         readingCanvas.SetActive(true);
         answeringCanvas.SetActive(false);
@@ -57,7 +69,8 @@ public class SevereSceneGameController : MonoBehaviour
                 answeringCanvas.SetActive(false);
                 interactableAnswer.SetActive(false);
                 timeLeft = readingTime;
-
+                ResetButtonPosition();
+                
                 answersLog.Add(answerText.text);
                 string tmp = "";
                 foreach (string answer in answersLog) {
@@ -67,5 +80,13 @@ public class SevereSceneGameController : MonoBehaviour
             }
 
         }
+    }
+
+    void ResetButtonPosition() {
+        // Reset choice 1 and choice 2
+        choice1.transform.position = choice1Position;
+        choice2.transform.position = choice2Position;
+        choice1.transform.rotation = Quaternion.Euler(choice1Rotation);
+        choice2.transform.rotation = Quaternion.Euler(choice2Rotation);
     }
 }
