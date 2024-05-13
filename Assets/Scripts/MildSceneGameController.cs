@@ -51,13 +51,9 @@ public class MildSceneGameController : MonoBehaviour
                 readingCanvas.SetActive(true);
                 answeringCanvas.SetActive(false);
                 timeLeft = readingTime;
-                // append the answer to the answers log
-                answersLog.Add(answerText.text);
-                string tmp = "";
-                foreach (string answer in answersLog) {
-                    tmp += answer + " ";
-                }
-                Debug.LogWarning(tmp);
+                SaveAnswer(answerText.text);
+                PrintAnswer();
+                
             }
 
             if (OVRInput.GetDown(OVRInput.Button.One)) {
@@ -70,5 +66,17 @@ public class MildSceneGameController : MonoBehaviour
             }
 
         }
+    }
+
+    void SaveAnswer(string answer) {
+        answersLog.Add(answer);
+    }
+
+    void PrintAnswer() {
+        string tmp = "";
+        foreach (string answer in answersLog) {
+            tmp += answer + " ";
+        }
+        Debug.LogWarning(tmp);
     }
 }
