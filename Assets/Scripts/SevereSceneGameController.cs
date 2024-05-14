@@ -9,22 +9,25 @@ public class SevereSceneGameController : MonoBehaviour
     // Create a timer that counts down from 20 seconds
     public float readingTime;
     public float answeringTime;
+    public float feedbackTime;
     [SerializeField]
     private GameObject readingCanvas;
     [SerializeField]
     private GameObject answeringCanvas;
+    [SerializeField]
+    private GameObject feedbackCanvas;
     [SerializeField]
     private GameObject interactableAnswer;
     [SerializeField]
     private TextMeshPro promptText;
     [SerializeField]
     private TextMeshPro answerText;
-    
     private GameObject choice1;
     private GameObject choice2;
 
     private TextMeshProUGUI readingTimeText;
     private TextMeshProUGUI answeringTimeText;
+    private TextMeshProUGUI feedbackTimeText;
 
     // Rotation and position of choice 1 and choice 2
     private Vector3 choice1Position;
@@ -35,12 +38,13 @@ public class SevereSceneGameController : MonoBehaviour
 
     private List<string> answersLog = new List<string>();
     private float timeLeft;
-    private enum GameState { Reading, Answer };
+    private enum GameState { Reading, Answer, Feedback };
     private GameState state = GameState.Reading;
 
     void Start() {
         readingTimeText = readingCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
         answeringTimeText = answeringCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        feedbackTimeText = feedbackCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
         choice1 = interactableAnswer.transform.Find("Choice 1").gameObject;
         choice2 = interactableAnswer.transform.Find("Choice 2").gameObject;
         choice1Position = choice1.transform.position;
@@ -50,6 +54,7 @@ public class SevereSceneGameController : MonoBehaviour
 
         readingCanvas.SetActive(true);
         answeringCanvas.SetActive(false);
+        feedbackCanvas.SetActive(false);
         interactableAnswer.SetActive(false);
         timeLeft = readingTime;
     }
@@ -71,13 +76,13 @@ public class SevereSceneGameController : MonoBehaviour
             timeLeft -= Time.deltaTime;
             answeringTimeText.text = ((int)timeLeft).ToString();
             if (timeLeft <= 0) {
-                state = GameState.Reading;
+                state = GameState.Feedback;
                 answeringTimeText.text = ((int)timeLeft).ToString();
-                readingCanvas.SetActive(true);
                 answeringCanvas.SetActive(false);
                 interactableAnswer.SetActive(false);
-                timeLeft = readingTime;
-                
+                feedbackCanvas.SetActive(true);
+
+                timeLeft = feedbackTime;
                 SaveAnswer(answerText.text);
                 promptText.text = "Drag your answer here.";
                 answerText.text = "";
@@ -85,7 +90,17 @@ public class SevereSceneGameController : MonoBehaviour
                 PrintAnswer();
                 ResetButtonPosition();
             }
-
+        }
+        else if (state == GameState.Feedback) {
+            timeLeft -= Time.deltaTime;
+            feedbackTimeText.text = ((int)timeLeft).ToString();
+            if (timeLeft <= 0) {
+                state = GameState.Reading;
+                feedbackTimeText.text = ((int)timeLeft).ToString();
+                feedbackCanvas.SetActive(false);
+                readingCanvas.SetActive(true);
+                timeLeft = readingTime;
+            }
         }
     }
 
@@ -96,9 +111,6 @@ public class SevereSceneGameController : MonoBehaviour
         choice2.transform.position = choice2Position;
         choice1.transform.rotation = choice1Rotation;
         choice2.transform.rotation = choice2Rotation;
-        // Reset the velocity of choice 1 and choice 2
-        // choice1.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        // choice2.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
     void SaveAnswer(string answerText) {
