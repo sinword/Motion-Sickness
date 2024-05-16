@@ -19,17 +19,24 @@ public class SevereSceneGameController : MonoBehaviour
     [SerializeField]
     private GameObject interactableAnswer;
     [SerializeField]
+    private StoryManager storyManager;
+    [SerializeField]
     private TextMeshPro promptText;
     [SerializeField]
     private TextMeshPro answerText;
     private GameObject choice1;
     private GameObject choice2;
 
+    private TextMeshProUGUI articleTitle;
+    private TextMeshProUGUI questionTitle;
+    private TextMeshProUGUI articleContent;
+    private TextMeshProUGUI questionContent;
+    private TextMeshProUGUI choice1Text;
+    private TextMeshProUGUI choice2Text;
     private TextMeshProUGUI readingTimeText;
     private TextMeshProUGUI answeringTimeText;
     private TextMeshProUGUI feedbackTimeText;
 
-    // Rotation and position of choice 1 and choice 2
     private Vector3 choice1Position;
     private Vector3 choice2Position;
     private Quaternion choice1Rotation;
@@ -40,8 +47,16 @@ public class SevereSceneGameController : MonoBehaviour
     private float timeLeft;
     private enum GameState { Reading, Answer, Feedback };
     private GameState state = GameState.Reading;
+    private int index;
 
     void Start() {
+        index = 0;
+        articleTitle = readingCanvas.transform.Find("Title").gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        articleContent = readingCanvas.transform.Find("Content").gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        questionTitle = answeringCanvas.transform.Find("Title").gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        questionContent = answeringCanvas.transform.Find("Question").gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        choice1Text = answeringCanvas.transform.Find("Choices/Text (TMP)").GetComponent<TextMeshProUGUI>();
+        choice2Text = answeringCanvas.transform.Find("Choices/Text (TMP) (1)").GetComponent<TextMeshProUGUI>();
         readingTimeText = readingCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
         answeringTimeText = answeringCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
         feedbackTimeText = feedbackCanvas.transform.Find("Timer").gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -57,49 +72,69 @@ public class SevereSceneGameController : MonoBehaviour
         feedbackCanvas.SetActive(false);
         interactableAnswer.SetActive(false);
         timeLeft = readingTime;
+
+        articleTitle.text = "Article " + (index + 1);
+        articleContent.text = storyManager.articles[index];
     }
 
     void Update()
     {
-        if (state == GameState.Reading) {
-            timeLeft -= Time.deltaTime;
-            readingTimeText.text = ((int)timeLeft).ToString();
-            if (timeLeft <= 0) {
-                state = GameState.Answer;
+        if (index < storyManager.storyNumber) {
+            if (state == GameState.Reading) {
+                timeLeft -= Time.deltaTime;
                 readingTimeText.text = ((int)timeLeft).ToString();
-                readingCanvas.SetActive(false);
-                answeringCanvas.SetActive(true);
-                interactableAnswer.SetActive(true);
-                timeLeft = answeringTime;
-            }
-        } else if (state == GameState.Answer) {
-            timeLeft -= Time.deltaTime;
-            answeringTimeText.text = ((int)timeLeft).ToString();
-            if (timeLeft <= 0) {
-                state = GameState.Feedback;
-                answeringTimeText.text = ((int)timeLeft).ToString();
-                answeringCanvas.SetActive(false);
-                interactableAnswer.SetActive(false);
-                feedbackCanvas.SetActive(true);
+                if (timeLeft <= 0) {
+                    state = GameState.Answer;
+                    readingTimeText.text = ((int)timeLeft).ToString();
+                    readingCanvas.SetActive(false);
+                    answeringCanvas.SetActive(true);
+                    interactableAnswer.SetActive(true);
+                    timeLeft = answeringTime;
 
-                timeLeft = feedbackTime;
-                SaveAnswer(answerText.text);
-                promptText.text = "Drag your answer here.";
-                answerText.text = "";
-                
-                PrintAnswer();
-                ResetButtonPosition();
+                    questionTitle.text = "Question " + (index + 1);
+                    questionContent.text = storyManager.highCogLoadQuestions[index];
+                    choice1Text.text = storyManager.HCLChoice1[index];
+                    choice2Text.text = storyManager.HCLChoice2[index];
+                }
+            } else if (state == GameState.Answer) {
+                timeLeft -= Time.deltaTime;
+                answeringTimeText.text = ((int)timeLeft).ToString();
+                if (timeLeft <= 0) {
+                    state = GameState.Feedback;
+                    answeringTimeText.text = ((int)timeLeft).ToString();
+                    answeringCanvas.SetActive(false);
+                    interactableAnswer.SetActive(false);
+                    feedbackCanvas.SetActive(true);
+
+                    timeLeft = feedbackTime;
+                    SaveAnswer(answerText.text);
+                    promptText.text = "Drag your answer here.";
+                    answerText.text = "";
+                    
+                    PrintAnswer();
+                    ResetButtonPosition();
+                }
             }
-        }
-        else if (state == GameState.Feedback) {
-            timeLeft -= Time.deltaTime;
-            feedbackTimeText.text = ((int)timeLeft).ToString();
-            if (timeLeft <= 0) {
-                state = GameState.Reading;
+            else if (state == GameState.Feedback) {
+                timeLeft -= Time.deltaTime;
                 feedbackTimeText.text = ((int)timeLeft).ToString();
-                feedbackCanvas.SetActive(false);
-                readingCanvas.SetActive(true);
-                timeLeft = readingTime;
+                if (timeLeft <= 0) {
+                    state = GameState.Reading;
+                    feedbackTimeText.text = ((int)timeLeft).ToString();
+                    feedbackCanvas.SetActive(false);
+                    readingCanvas.SetActive(true);
+                    timeLeft = readingTime;
+                    index++;
+                    if (index < storyManager.storyNumber) {
+                        articleTitle.text = "Article " + (index + 1);
+                        articleContent.text = storyManager.articles[index];
+                    }
+                    else {
+                        readingCanvas.SetActive(false);
+                        answeringCanvas.SetActive(false);
+                        feedbackCanvas.SetActive(false);
+                    }
+                }
             }
         }
     }
@@ -113,8 +148,11 @@ public class SevereSceneGameController : MonoBehaviour
         choice2.transform.rotation = choice2Rotation;
     }
 
-    void SaveAnswer(string answerText) {
-        answersLog.Add(answerText);
+    void SaveAnswer(string answer) {
+        if (answer != "A" && answer != "B") {
+            answer = "X";
+        }
+        answersLog.Add(answer);
     }
 
     void PrintAnswer() {
