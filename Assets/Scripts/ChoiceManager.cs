@@ -37,7 +37,7 @@ public class ChoiceManager : MonoBehaviour
         Debug.Log("Distance to answer 1: " + distanceToAnswer1.ToString());
         Debug.Log("Distance to answer 2: " + distanceToAnswer2.ToString());
 
-        if ((!isChoice1Attached) && (distanceToAnswer1 - 0.3 < attachDistance)) {
+        if ((!isChoice1Attached) && (distanceToAnswer1 - 0.15 < attachDistance)) {
             answer.transform.Find("PromptText").GetComponent<TextMeshPro>().text = "";
             answer.transform.Find("AnswerText").GetComponent<TextMeshPro>().text = "A";
 
@@ -49,7 +49,7 @@ public class ChoiceManager : MonoBehaviour
             }
             resetChoice2();
         }
-        else if ((!isChoice2Attached) && (distanceToAnswer2 - 0.3 < attachDistance)) {
+        else if ((!isChoice2Attached) && (distanceToAnswer2 - 0.15 < attachDistance)) {
             answer.transform.Find("PromptText").GetComponent<TextMeshPro>().text = "";
             answer.transform.Find("AnswerText").GetComponent<TextMeshPro>().text = "B";
 
