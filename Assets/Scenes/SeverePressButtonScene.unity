@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1064,16 +1064,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 507451625}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e76ec606509bde14189aa29178a7d08b, type: 3}
+  m_Script: {fileID: 11500000, guid: 51024a0cf4ccb3a4f80790246d927f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readingTime: 2
-  answeringTime: 2
-  feedbackTime: 2
+  readingTime: 3
+  answeringTime: 5
+  feedbackTime: 1
   readingCanvas: {fileID: 1400667292}
   answeringCanvas: {fileID: 1737596055}
   feedbackCanvas: {fileID: 1955045986}
-  storyManager: {fileID: 886890893}
+  storyManager: {fileID: 886890895}
 --- !u!1 &515752900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,7 +1281,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2478579677981785246, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1400667296}
+    - targetCorrespondingSourceObject: {fileID: 2478579677981785246, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1737596059}
+    - targetCorrespondingSourceObject: {fileID: 2478579677981785246, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1955045990}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f54012181eacade4ea242c65f804720f, type: 3}
 --- !u!114 &522122096 stripped
@@ -1306,6 +1315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dda6958e834dc644b949b1ff70e432b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &522122098 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2478579677981785246, guid: f54012181eacade4ea242c65f804720f, type: 3}
+  m_PrefabInstance: {fileID: 522122095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &534298123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,7 +1833,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 886890894}
-  - component: {fileID: 886890893}
+  - component: {fileID: 886890895}
   m_Layer: 0
   m_Name: StoryManager
   m_TagString: Untagged
@@ -1827,7 +1841,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &886890893
+--- !u!4 &886890894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886890892}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.02, z: 0.522}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &886890895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1839,7 +1868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77883c608188c2441b2bee79490752d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storyNumber: 4
+  storyNumber: 10
   articles:
   - Graphic design involves creating visual content to communicate messages. It combines
     typography, imagery, and layout techniques to produce advertisements, websites,
@@ -1858,7 +1887,7 @@ MonoBehaviour:
     a project by the U.S. Department of Defense, it has since become an indispensable
     part of modern life.
   - Ludwig van Beethoven's Ninth Symphony, completed in 1824, is one of his most
-    famous works. It includes the "Ode to Joy," a choral finale that has become a
+    famous works. It includes the 'Ode to Joy,' a choral finale that has become a
     symbol of hope and unity. Beethoven was completely deaf when he composed this
     masterpiece.
   - Albert Einstein's Theory of Relativity, formulated in the early 20th century,
@@ -1880,75 +1909,83 @@ MonoBehaviour:
   - Tennis evolved from a game played by French monks in the 12th century to the
     modern sport we know today. The open tournaments, Grand Slam events, and influential
     players like Serena Williams and Roger Federer have popularized tennis globally.
-  - The Industrial Revolution, beginning in the 18th century, transformed society
-    with the mechanization of production processes. Inventions like the steam engine
-    and spinning jenny led to urbanization, increased productivity, and social changes,
-    laying the foundation for modern industry.
-  - Digital art, created using software and digital tools, has transformed artistic
-    expression. It allows for endless experimentation with form, color, and texture.
-    Digital artists like Beeple have gained international recognition, and NFTs (non-fungible
-    tokens) are redefining art ownership.
-  - E-sports, competitive video gaming, has become a global phenomenon, with professional
-    leagues, tournaments, and millions of fans. Games like League of Legends and
-    Fortnite have massive followings, and e-sports athletes are gaining recognition
-    and lucrative sponsorships.
-  - Industrial design focuses on the creation of everyday objects, combining functionality
-    and aesthetics. Designers like Dieter Rams and Charles Eames have created iconic
-    products, emphasizing simplicity and usability. Good design often goes unnoticed
-    because it seamlessly integrates into daily life.
-  - Hip-hop culture, originating in the 1970s in the Bronx, encompasses music, dance,
-    art, and fashion. It has evolved into a global phenomenon, influencing many aspects
-    of popular culture. Artists like Tupac Shakur and The Notorious B.I.G. have left
-    lasting legacies in music and beyond.
-  - Folk music reflects the traditions, stories, and cultures of communities. Passed
-    down through generations, it often includes songs about daily life, work, and
-    historical events. Folk music varies widely across different regions, preserving
-    cultural heritage and identity.
-  lowCogLoadQuestions:
+  LCLQuestion:
   - What is graphic design primarily concerned with?
   - What is origami?
   - When did the video game industry begin?
   - What was the internet initially developed by?
+  - What is included in Beethoven's Ninth Symphony?
+  - Who formulated the Theory of Relativity?
+  - What can escape from a black hole?
+  - Who invented the Gutenberg Press?
+  - Who was a famous Renaissance artist?
+  - Where did tennis originally evolve from?
   LCLChoice1:
   - Creating visual content to communicate messages
   - The art of paper folding
   - 1970s
   - U.S. Department of Defense
+  - The Four Seasons
+  - Isaac Newton
+  - Nothing
+  - Johannes Gutenberg
+  - Pablo Picasso
+  - English knights
   LCLChoice2:
   - Writing novels
   - The art of painting
   - 1990s
   - U.S. Department of Commerce
-  highCogLoadQuestions:
+  - Ode to Joy
+  - Albert Einstein
+  - Light
+  - Leonardo da Vinci
+  - Leonardo da Vinci
+  - French monks
+  HCLQuestion:
   - How has technology impacted graphic design?
   - How has modern origami evolved from traditional designs?
   - How have video games evolved since their inception?
   - How has the internet impacted modern life?
+  - Why is Beethoven's Ninth Symphony particularly remarkable?
+  - What does the Theory of Relativity help us understand?
+  - How are black holes formed?
+  - How did the Gutenberg Press impact society?
+  - How did Renaissance artists change the portrayal of the human form in their work?
+  - What aspects have contributed to the global popularity of tennis?
   HCLChoice1:
   - By incorporating digital tools and techniques.
-  - It involves mathematical principles and intricate patterns.
+  - It uses multiple colors and paints.
   - From simple pixelated graphics to immersive, lifelike experiences.
   - It revolutionized communication, commerce, and information access.
+  - It was written for a small chamber orchestra.
+  - How chemical reactions occur.
+  - When massive stars collapse under their own gravity.
+  - It made books more accessible and affordable.
+  - They used abstract shapes and vivid colors.
+  - Exclusive club membership.
   HCLChoice2:
   - By eliminating the need for any design principles.
-  - It uses multiple colors and paints.
+  - It involves mathematical principles and intricate patterns.
   - From board games to card games.
   - It limited access to information.
---- !u!4 &886890894
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886890892}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.02, z: 0.522}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  - Beethoven was completely deaf when he composed it.
+  - How objects move at high speeds and how gravity affects space-time.
+  - When planets collide.
+  - It increased the use of handwriting in books.
+  - They emphasized realism and perspective.
+  - Grand Slam events and influential players.
+  answers:
+  - A
+  - B
+  - A
+  - A
+  - B
+  - B
+  - A
+  - A
+  - B
+  - B
 --- !u!1 &889398141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,7 +2170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2326,7 +2363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 130, y: -34}
+  m_AnchoredPosition: {x: -130, y: -34}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1243930794
@@ -2513,7 +2550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5686275}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2882,8 +2919,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400667292}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.522}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.257}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2891,11 +2928,11 @@ RectTransform:
   - {fileID: 1854642190}
   - {fileID: 1354740222}
   - {fileID: 188266671}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 522122098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.02}
+  m_AnchoredPosition: {x: 0.282, y: 0.3965}
   m_SizeDelta: {x: 600, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1409925568
@@ -3158,8 +3195,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737596055}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.522}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.257}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3169,11 +3206,11 @@ RectTransform:
   - {fileID: 1784862862}
   - {fileID: 1326774676}
   - {fileID: 769578962}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 522122098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.02}
+  m_AnchoredPosition: {x: 0.282, y: 0.3965}
   m_SizeDelta: {x: 600, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1755566336
@@ -3688,7 +3725,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -130, y: -34}
+  m_AnchoredPosition: {x: 130, y: -34}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1909700202
@@ -3914,8 +3951,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1955045986}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.522}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.257}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3923,11 +3960,11 @@ RectTransform:
   - {fileID: 1372600278}
   - {fileID: 1409925569}
   - {fileID: 1999264442}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 522122098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.02}
+  m_AnchoredPosition: {x: 0.282, y: 0.3965}
   m_SizeDelta: {x: 600, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1998683428
@@ -4356,6 +4393,3 @@ SceneRoots:
   - {fileID: 507451627}
   - {fileID: 886890894}
   - {fileID: 522122095}
-  - {fileID: 1400667296}
-  - {fileID: 1737596059}
-  - {fileID: 1955045990}

@@ -5,9 +5,8 @@ using System;
 using TMPro;
 using System.CodeDom.Compiler;
 
-public class MildSceneGameController : MonoBehaviour
+public class SeverePressButtonSceneGameController : MonoBehaviour
 {
-    // Create a timer that counts down from 20 seconds
     public float readingTime;
     public float answeringTime;
     public float feedbackTime;
@@ -70,22 +69,22 @@ public class MildSceneGameController : MonoBehaviour
                     readingCanvas.SetActive(false);
                     answeringCanvas.SetActive(true);
                     timeLeft = answeringTime;
-                    answerText.text = "";
+                    answerText.text = "Press the button on the cotroller.";
                     answerText.fontSize = 15;
 
                     questionTitle.text = "Question " + (index + 1);
-                    questionContent.text = storyManager.lowCogLoadQuestions[index];
-                    choice1Text.text = storyManager.LCLChoice1[index];
-                    choice2Text.text = storyManager.LCLChoice2[index];
+                    questionContent.text = storyManager.HCLQuestion[index];
+                    choice1Text.text = storyManager.HCLChoice1[index];
+                    choice2Text.text = storyManager.HCLChoice2[index];
                 }
             } else if (state == GameState.Answer) {
                 timeLeft -= Time.deltaTime;
                 answeringTimeText.text = ((int)timeLeft).ToString();
-                if (OVRInput.GetDown(OVRInput.Button.Three) || OVRInput.GetDown(OVRInput.Button.Four)) { // Left controller
+                if (OVRInput.GetDown(OVRInput.Button.One)) {
                     answerText.text = "A";
                     answerText.fontSize = 30;
                 }
-                else if (OVRInput.GetDown(OVRInput.Button.One) || OVRInput.GetDown(OVRInput.Button.Two)) { // Right controller
+                else if (OVRInput.GetDown(OVRInput.Button.Two)) {
                     answerText.text = "B";
                     answerText.fontSize = 30;
                 }
@@ -117,6 +116,12 @@ public class MildSceneGameController : MonoBehaviour
                         readingCanvas.SetActive(false);
                         answeringCanvas.SetActive(false);
                         feedbackCanvas.SetActive(false);
+                        int correct = 0;
+                        for (int i = 0; i < storyManager.storyNumber; i++) {
+                            if (answersLog[i] == storyManager.answers[i]) {
+                                correct++;
+                            }
+                        }
                     }   
                 }
             }
