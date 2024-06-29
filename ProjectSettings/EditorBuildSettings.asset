@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/DemoScene.unity
     guid: c311f99147d7e054daaf77837a8520dd
+  - enabled: 1
+    path: Assets/Scenes/SpotTheDifferenceScene.unity
+    guid: 46d8579c2f3c0da45829877186f09bef
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 09411c5265c421c4fb5ac74521e33b58, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: c6428348df8f9c04da36def3f6994a35, type: 2}
