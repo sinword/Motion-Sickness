@@ -25,9 +25,7 @@ public class ImageClickHandler : MonoBehaviour, IPointerClickHandler
                 Vector2 imagePosition = new Vector2(x, y);
 
                 StartCoroutine(HandleClick(imagePosition, localCursor));
-
             }
-
         }
     }
 
@@ -54,22 +52,6 @@ public class ImageClickHandler : MonoBehaviour, IPointerClickHandler
             leftCircle.GetComponent<Image>().color = Color.green;
             rightCircle.GetComponent<Image>().color = Color.green;
         }
-
-        // if (leftPixelColor != rightPixelColor)
-        // {
-        //     leftCircle.GetComponent<Image>().color = Color.green;
-        //     rightCircle.GetComponent<Image>().color = Color.green;
-        // }
-        // else
-        // {
-        //     leftCircle.GetComponent<Image>().color = Color.red;
-        //     rightCircle.GetComponent<Image>().color = Color.red;
-
-        //     yield return new WaitForSeconds(displayTime);
-
-        //     Destroy(leftCircle);
-        //     Destroy(rightCircle);
-        // }
     }
 
     private bool ImageCompare(Vector2 position)
