@@ -6,22 +6,22 @@ using System.Collections;
 
 public class ImageClickHandler : MonoBehaviour, IPointerClickHandler
 {
-    public Image leftImage;
     public Image rightImage;
+    public Image leftImage;
     public GameObject circlePrefab;
     private float displayTime = 1.0f;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         Vector2 localCursor;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(leftImage.rectTransform, eventData.position, eventData.pressEventCamera, out localCursor))
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(rightImage.rectTransform, eventData.position, eventData.pressEventCamera, out localCursor))
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(leftImage.rectTransform, eventData.pressPosition, eventData.pressEventCamera))
+            if (RectTransformUtility.RectangleContainsScreenPoint(rightImage.rectTransform, eventData.pressPosition, eventData.pressEventCamera))
             {
                 // Convert to image space
-                Rect rect = leftImage.rectTransform.rect;
-                float x = (localCursor.x - rect.x) * (leftImage.sprite.texture.width / rect.width);
-                float y = (localCursor.y - rect.y) * (leftImage.sprite.texture.height / rect.height);
+                Rect rect = rightImage.rectTransform.rect;
+                float x = (localCursor.x - rect.x) * (rightImage.sprite.texture.width / rect.width);
+                float y = (localCursor.y - rect.y) * (rightImage.sprite.texture.height / rect.height);
                 Vector2 imagePosition = new Vector2(x, y);
 
                 StartCoroutine(HandleClick(imagePosition, localCursor));
@@ -31,37 +31,47 @@ public class ImageClickHandler : MonoBehaviour, IPointerClickHandler
 
     private IEnumerator HandleClick(Vector2 imagePosition, Vector2 localCursor)
     {
-        GameObject leftCircle = Instantiate(circlePrefab, leftImage.transform);
         GameObject rightCircle = Instantiate(circlePrefab, rightImage.transform);
-        leftCircle.transform.localPosition = localCursor;
+        GameObject leftCircle = Instantiate(circlePrefab, leftImage.transform);
         rightCircle.transform.localPosition = localCursor;
+        leftCircle.transform.localPosition = localCursor;
 
         if (ImageCompare(imagePosition))
         {
-            // No diff
-            leftCircle.GetComponent<Image>().color = Color.red;
-            rightCircle.GetComponent<Image>().color = Color.red;
-
-            yield return new WaitForSeconds(displayTime);
-            Destroy(leftCircle);
-            Destroy(rightCircle);
+            // Diff
+            rightCircle.GetComponent<Image>().color = Color.green;
+            leftCircle.GetComponent<Image>().color = Color.green;
         }
         else
         {
-            // Diff
-            leftCircle.GetComponent<Image>().color = Color.green;
-            rightCircle.GetComponent<Image>().color = Color.green;
+            // No diff
+            rightCircle.GetComponent<Image>().color = Color.red;
+            leftCircle.GetComponent<Image>().color = Color.red;
+
+            yield return new WaitForSeconds(displayTime);
+            Destroy(rightCircle);
+            Destroy(leftCircle);
         }
     }
 
     private bool ImageCompare(Vector2 position)
     {
-        Color leftPixelColor = leftImage.sprite.texture.GetPixel((int)position.x, (int)position.y);
-        Color rightPixelColor = rightImage.sprite.texture.GetPixel((int)position.x, (int)position.y);
+        Color rightPixelColor = rightImage.sprite.texture.GetPixel((int)position.x, (int)position.y) * 255;
+        Color leftPixelColor = leftImage.sprite.texture.GetPixel((int)position.x, (int)position.y) * 255;
+        
+        int pixelThreshold = 50;
+        if (Mathf.Abs(rightPixelColor.r - leftPixelColor.r) > pixelThreshold ||
+            Mathf.Abs(rightPixelColor.g - leftPixelColor.g) > pixelThreshold ||
+            Mathf.Abs(rightPixelColor.b - leftPixelColor.b) > pixelThreshold)
+        {
+            Debug.LogWarning("Right: " + rightPixelColor);
+            Debug.LogWarning("Left: " + leftPixelColor);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
-        Debug.LogWarning("Left click position:" + position + " Left pixel color:" + leftPixelColor);
-        Debug.LogWarning("Right click position:" + position + " Right pixel color:" + rightPixelColor); 
-
-        return leftPixelColor == rightPixelColor;
     }
 }
