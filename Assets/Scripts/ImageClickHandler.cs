@@ -28,4 +28,9 @@ public class ImageClickHandler : MonoBehaviour, IPointerClickHandler
             }
         }
     }  
+
+    public void test()
+    {
+        Debug.LogWarning("Button pressed!");
+    }
 }

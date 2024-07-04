@@ -125,6 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e404177eac7bbd840bdcc8c16cd304c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightImage: {fileID: 3253555315207348181}
-  leftImage: {fileID: 0}
-  circlePrefab: {fileID: 4749120113213272950, guid: 83c2829e086044141a51db7cc6d0b63b, type: 3}
+  currentImage: {fileID: 3253555315207348181}
+  anotherImage: {fileID: 0}

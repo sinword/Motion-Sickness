@@ -25,19 +25,7 @@ public class ImageManager : MonoBehaviour
 
             Sprite leftSprite = Resources.Load<Sprite>(leftImagePath);
             Sprite rightSprite = Resources.Load<Sprite>(rightImagePath);
-
-            if (leftSprite == null)
-            {
-                Debug.LogError("Left image not found: " + leftImagePath);
-                continue;
-            }
-            
-            if (rightSprite == null)
-            {
-                Debug.LogError("Right image not found: " + rightImagePath);
-                continue;
-            }
-
+    
             questions.Add(new Question { left_image = leftSprite, right_image = rightSprite });
         }
     }
