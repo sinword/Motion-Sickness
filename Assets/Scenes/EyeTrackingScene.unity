@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.70289326, g: 0.685778, b: 0.6765163, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,57 +134,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7623a8f0b49cf4dbaa40aea4d4be64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &507451625
+--- !u!1 &362016755 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 527124020810180616, guid: f89960d5e15139244970f93c6006189d, type: 3}
+  m_PrefabInstance: {fileID: 6225429053179974119}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 507451627}
-  - component: {fileID: 507451628}
-  m_Layer: 0
-  m_Name: GameController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &507451627
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507451625}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8509719, y: 0.3515165, z: 0.6178909}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &507451628
+--- !u!114 &362016758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507451625}
+  m_GameObject: {fileID: 362016755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e76ec606509bde14189aa29178a7d08b, type: 3}
+  m_Script: {fileID: 11500000, guid: 555725d48e9051a4bb6b8d45178c2fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readingTime: 35
-  answeringTime: 15
-  feedbackTime: 10
-  readingCanvas: {fileID: 0}
-  answeringCanvas: {fileID: 0}
-  feedbackCanvas: {fileID: 0}
-  storyManager: {fileID: 886890895}
+  projectionSurfaceType: 0
+  overlayType: 1
+  compositionDepth: 0
+  hidden: 0
+  overridePerLayerColorScaleAndOffset: 0
+  colorScale: {x: 1, y: 1, z: 1, w: 1}
+  colorOffset: {x: 0, y: 0, z: 0, w: 0}
+  colorMapEditorType_: 0
+  colorMapEditorGradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  colorMapEditorContrast: 0
+  colorMapEditorBrightness: 0
+  colorMapEditorPosterize: 0
+  colorMapEditorSaturation: 0
+  _colorLutSourceTexture: {fileID: 0}
+  _colorLutTargetTexture: {fileID: 0}
+  _lutWeight: 1
+  _flipLutY: 1
+  serializedSurfaceGeometry: []
+  textureOpacity_: 1
+  edgeRenderingEnabled_: 0
+  edgeColor_: {r: 1, g: 1, b: 1, a: 1}
+  colorMapType: 0
 --- !u!1001 &514798755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,273 +360,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &758417578
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 758417582}
-  - component: {fileID: 758417581}
-  - component: {fileID: 758417580}
-  - component: {fileID: 758417579}
-  m_Layer: 0
-  m_Name: Plane
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!65 &758417579
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758417578}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &758417580
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758417578}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &758417581
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758417578}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &758417582
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758417578}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 0, z: 10}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &886890892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 886890894}
-  - component: {fileID: 886890895}
-  m_Layer: 0
-  m_Name: StoryManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &886890894
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886890892}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.02, z: 0.522}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &886890895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886890892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77883c608188c2441b2bee79490752d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storyNumber: 10
-  articles:
-  - Graphic design involves creating visual content to communicate messages. It combines
-    typography, imagery, and layout techniques to produce advertisements, websites,
-    logos, and more. This field has evolved with technology, incorporating digital
-    tools and techniques to enhance creativity and efficiency.
-  - Origami, the Japanese art of paper folding, transforms a flat sheet of paper
-    into a finished sculpture through folding techniques. Traditional designs include
-    cranes and flowers, while modern origami can be complex, involving mathematical
-    principles and intricate patterns.
-  - Video games have evolved from simple pixelated graphics to immersive, lifelike
-    experiences. The industry began in the 1970s with arcade games like Pong and
-    has grown into a multi-billion-dollar industry, encompassing a wide range of
-    genres and platforms.
-  - The internet, a global network of computers, was developed in the late 20th century.
-    It revolutionized communication, commerce, and information access. Initially
-    a project by the U.S. Department of Defense, it has since become an indispensable
-    part of modern life.
-  - Ludwig van Beethoven's Ninth Symphony, completed in 1824, is one of his most
-    famous works. It includes the 'Ode to Joy,' a choral finale that has become a
-    symbol of hope and unity. Beethoven was completely deaf when he composed this
-    masterpiece.
-  - Albert Einstein's Theory of Relativity, formulated in the early 20th century,
-    revolutionized our understanding of space, time, and gravity. It consists of
-    the Special and General Relativity theories, explaining how objects move at high
-    speeds and how gravity affects space-time.
-  - Black holes are regions in space where gravity is so strong that nothing, not
-    even light, can escape. They form when massive stars collapse under their own
-    gravity at the end of their life cycles. Black holes are studied to understand
-    more about the nature of the universe.
-  - The Gutenberg Press, invented by Johannes Gutenberg in the mid-15th century,
-    revolutionized the production of books. It allowed for mass production, making
-    literature and information more accessible and affordable, and spurred the spread
-    of knowledge during the Renaissance.
-  - The Renaissance, spanning the 14th to the 17th century, was a period of renewed
-    interest in classical art and humanism. Artists like Leonardo da Vinci and Michelangelo
-    produced masterpieces that emphasized realism, perspective, and the human form,
-    profoundly impacting Western art.
-  - Tennis evolved from a game played by French monks in the 12th century to the
-    modern sport we know today. The open tournaments, Grand Slam events, and influential
-    players like Serena Williams and Roger Federer have popularized tennis globally.
-  LCLQuestion:
-  - What is graphic design primarily concerned with?
-  - What is origami?
-  - When did the video game industry begin?
-  - What was the internet initially developed by?
-  - What is included in Beethoven's Ninth Symphony?
-  - Who formulated the Theory of Relativity?
-  - What can escape from a black hole?
-  - Who invented the Gutenberg Press?
-  - Who was a famous Renaissance artist?
-  - Where did tennis originally evolve from?
-  LCLChoice1:
-  - Creating visual content to communicate messages
-  - The art of paper folding
-  - 1970s
-  - U.S. Department of Defense
-  - The Four Seasons
-  - Isaac Newton
-  - Nothing
-  - Johannes Gutenberg
-  - Pablo Picasso
-  - English knights
-  LCLChoice2:
-  - Writing novels
-  - The art of painting
-  - 1990s
-  - U.S. Department of Commerce
-  - Ode to Joy
-  - Albert Einstein
-  - Light
-  - Leonardo da Vinci
-  - Leonardo da Vinci
-  - French monks
-  HCLQuestion:
-  - How has technology impacted graphic design?
-  - How has modern origami evolved from traditional designs?
-  - How have video games evolved since their inception?
-  - How has the internet impacted modern life?
-  - Why is Beethoven's Ninth Symphony particularly remarkable?
-  - What does the Theory of Relativity help us understand?
-  - How are black holes formed?
-  - How did the Gutenberg Press impact society?
-  - How did Renaissance artists change the portrayal of the human form in their work?
-  - What aspects have contributed to the global popularity of tennis?
-  HCLChoice1:
-  - By incorporating digital tools and techniques.
-  - It uses multiple colors and paints.
-  - From simple pixelated graphics to immersive, lifelike experiences.
-  - It revolutionized communication, commerce, and information access.
-  - It was written for a small chamber orchestra.
-  - How chemical reactions occur.
-  - When massive stars collapse under their own gravity.
-  - It made books more accessible and affordable.
-  - They used abstract shapes and vivid colors.
-  - Exclusive club membership.
-  HCLChoice2:
-  - By eliminating the need for any design principles.
-  - It involves mathematical principles and intricate patterns.
-  - From board games to card games.
-  - It limited access to information.
-  - Beethoven was completely deaf when he composed it.
-  - How objects move at high speeds and how gravity affects space-time.
-  - When planets collide.
-  - It increased the use of handwriting in books.
-  - They emphasized realism and perspective.
-  - Grand Slam events and influential players.
-  answers:
-  - A
-  - B
-  - A
-  - A
-  - B
-  - B
-  - A
-  - A
-  - B
-  - B
 --- !u!1001 &1479424645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -824,6 +574,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 542051594896942970, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: enableDynamicResolution
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542051594896942970, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: isInsightPassthroughEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542051594896942970, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: requestBodyTrackingPermissionOnStartup
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 793230881595724550, guid: f89960d5e15139244970f93c6006189d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -872,10 +634,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: EyeTracking OVRCameraRigInteraction
       objectReference: {fileID: 0}
+    - target: {fileID: 1994451594973340435, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994451594973340435, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.21960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994451594973340435, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.21960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994451594973340435, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.21960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281901008909659189, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281901008909659189, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3206060970420219070, guid: f89960d5e15139244970f93c6006189d, type: 3}
       propertyPath: handUsedForPinchSelection
       value: 
       objectReference: {fileID: 290715809}
+    - target: {fileID: 3522355932492785632, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5070814490939955736, guid: f89960d5e15139244970f93c6006189d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -887,17 +677,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 527124020810180616, guid: f89960d5e15139244970f93c6006189d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 362016758}
   m_SourcePrefab: {fileID: 100100000, guid: f89960d5e15139244970f93c6006189d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 705507995}
-  - {fileID: 758417582}
   - {fileID: 1755566339}
-  - {fileID: 507451627}
-  - {fileID: 886890894}
   - {fileID: 6225429053179974119}
   - {fileID: 5543573962604355646}
   - {fileID: 1479424645}

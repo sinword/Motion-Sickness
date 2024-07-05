@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-
 public class EyeTrackingRay : MonoBehaviour
 {
     [SerializeField]
@@ -25,24 +24,24 @@ public class EyeTrackingRay : MonoBehaviour
 
     [SerializeField]
     private OVRHand handUsedForPinchSelection;
-    
+
     [SerializeField]
     private bool mockHandUsedForPinchSelection;
-    
+
     private bool intercepting;
 
     private bool allowPinchSelection;
-    
+
     private LineRenderer lineRenderer;
-    
+
     private Dictionary<int, EyeInteractable> interactables = new Dictionary<int, EyeInteractable>();
-    
+
     private EyeInteractable lastEyeInteractable;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        if (lineRenderer == null) 
+        if (lineRenderer == null)
         {
             Debug.LogError("LineRenderer component not found!");
             return;
@@ -81,7 +80,7 @@ public class EyeTrackingRay : MonoBehaviour
 
     private void SelectionStarted()
     {
-        if (IsPinching())
+        if (intercepting && IsPinching())
         {
             lastEyeInteractable?.Select(true, (handUsedForPinchSelection?.IsTracked ?? false) ? handUsedForPinchSelection.transform : transform);
         }
@@ -91,7 +90,7 @@ public class EyeTrackingRay : MonoBehaviour
         }
     }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         if (IsPinching()) return;
 
@@ -125,7 +124,7 @@ public class EyeTrackingRay : MonoBehaviour
             else
             {
                 // Log detailed error if EyeInteractable component not found
-                Debug.LogError("EyeInteractable component not found on hit object: " + hit.transform.gameObject.name 
+                Debug.LogError("EyeInteractable component not found on hit object: " + hit.transform.gameObject.name
                     + ". Transform: " + hit.transform.name + ", Layer: " + hit.transform.gameObject.layer);
                 return;
             }
@@ -136,7 +135,6 @@ public class EyeTrackingRay : MonoBehaviour
         }
     }
 
-
     private void OnHoverEnded()
     {
         foreach (var interactable in interactables)
@@ -145,23 +143,20 @@ public class EyeTrackingRay : MonoBehaviour
             {
                 interactable.Value.Hover(false);
             }
-            else 
+            else
             {
                 Debug.LogWarning("Null EyeInteractable in interactable dictionary!");
             }
         }
     }
 
-    private void OnDestroy() 
+    private void OnDestroy()
     {
         interactables.Clear();
     }
 
-        
-
-    private bool IsPinching() 
+    private bool IsPinching()
     {
-        return (allowPinchSelection && handUsedForPinchSelection!= null && handUsedForPinchSelection.GetFingerIsPinching(OVRHand.HandFinger.Index)) || mockHandUsedForPinchSelection;
+        return (allowPinchSelection && handUsedForPinchSelection != null && handUsedForPinchSelection.GetFingerIsPinching(OVRHand.HandFinger.Index)) || mockHandUsedForPinchSelection;
     }
-    
 }
