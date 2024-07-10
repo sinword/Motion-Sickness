@@ -7,44 +7,52 @@ public class VisionFollower : MonoBehaviour
     [SerializeField]
     private Transform cameraTransform;
     [SerializeField]
-    private float distance = 3.0f;
+    private float distance = 2.5f;
     [SerializeField]
-    private float shiftSpeed = 0.025f;
-
-    private bool isCentered = false;
-    private Renderer[] childRenderers;
+    private float shiftSpeed = 0.015f;
+    [SerializeField]
+    private float positionThreshold = 0.2f;
+    private bool isCentered = true;
+    private CanvasRenderer[] childCanvasRenderers;
 
     void Start()
     {
-        childRenderers = GetComponentsInChildren<Renderer>();
+        
+        childCanvasRenderers = GetComponentsInChildren<CanvasRenderer>();
+        foreach (CanvasRenderer canvasRenderer in childCanvasRenderers)
+        {
+            Debug.LogWarning(canvasRenderer.gameObject.name);
+        }
     }
 
     void Update()
     {
-        // Check if all child renderers are not visible
-        if (!AreAnyChildRenderersVisible())
+        if (!AreAnyChildCanvasRenderersVisible() && !isCentered)
         {
             isCentered = false;
             Vector3 targetPosition = FindTargetPosition();
             MoveTowards(targetPosition);
-            
+
             if (ReachedPosition(targetPosition))
             {
+                Debug.LogWarning("Reached target position");
                 isCentered = true;
             }
         }
     }
 
-    private bool AreAnyChildRenderersVisible()
+    private bool AreAnyChildCanvasRenderersVisible()
     {
-        foreach (Renderer renderer in childRenderers)
+        foreach (CanvasRenderer canvasRenderer in childCanvasRenderers)
         {
-            Debug.Log(renderer.name + " is visible: " + renderer.isVisible);
-            if (renderer.isVisible)
+            RectTransform rectTransform = canvasRenderer.GetComponent<RectTransform>();
+            if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, rectTransform.position, Camera.main))
             {
+                Debug.LogWarning(canvasRenderer.gameObject.name + " is visible.");
                 return true;
             }
         }
+        isCentered = false;
         return false;
     }
 
@@ -62,6 +70,6 @@ public class VisionFollower : MonoBehaviour
 
     private bool ReachedPosition(Vector3 targetPosition)
     {
-        return Vector3.Distance(targetPosition, transform.position) < 0.1f;
+        return Vector3.Distance(targetPosition, transform.position) < positionThreshold;
     }
 }
