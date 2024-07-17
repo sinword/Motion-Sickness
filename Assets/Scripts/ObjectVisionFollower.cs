@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisionFollower : MonoBehaviour
+public class ObjectVisionFollower : MonoBehaviour
 {
     [SerializeField]
     private Transform cameraTransform;
@@ -12,48 +12,27 @@ public class VisionFollower : MonoBehaviour
     private float shiftSpeed = 0.015f;
     [SerializeField]
     private float positionThreshold = 0.2f;
-    private bool isCentered = true;
-    private CanvasRenderer[] childCanvasRenderers;
+    private bool isCentered = false;
 
-    void Start()
+    // Built-in Unity method
+    private void OnBecameInvisible()
     {
-        
-        childCanvasRenderers = GetComponentsInChildren<CanvasRenderer>();
-        foreach (CanvasRenderer canvasRenderer in childCanvasRenderers)
-        {
-            Debug.LogWarning(canvasRenderer.gameObject.name);
-        }
+        Debug.LogWarning("Object became invisible");
+        isCentered = false;
     }
 
     void Update()
     {
-        if (!AreAnyChildCanvasRenderersVisible() && !isCentered)
+        if (!isCentered)
         {
-            isCentered = false;
             Vector3 targetPosition = FindTargetPosition();
             MoveTowards(targetPosition);
 
             if (ReachedPosition(targetPosition))
             {
-                Debug.LogWarning("Reached target position");
                 isCentered = true;
             }
         }
-    }
-
-    private bool AreAnyChildCanvasRenderersVisible()
-    {
-        foreach (CanvasRenderer canvasRenderer in childCanvasRenderers)
-        {
-            RectTransform rectTransform = canvasRenderer.GetComponent<RectTransform>();
-            if (RectTransformUtility.RectangleContainsScreenPoint(rectTransform, rectTransform.position, Camera.main))
-            {
-                Debug.LogWarning(canvasRenderer.gameObject.name + " is visible.");
-                return true;
-            }
-        }
-        isCentered = false;
-        return false;
     }
 
     private Vector3 FindTargetPosition()
@@ -63,6 +42,7 @@ public class VisionFollower : MonoBehaviour
 
     private void MoveTowards(Vector3 targetPosition)
     {
+        // During the transition, the distance between the camera and the object keeps does not change
         transform.position += (targetPosition - transform.position) * shiftSpeed;
         transform.LookAt(cameraTransform);
         transform.Rotate(0, 180, 0);

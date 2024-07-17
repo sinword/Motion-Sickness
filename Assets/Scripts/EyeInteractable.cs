@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -36,12 +34,16 @@ public class EyeInteractable : MonoBehaviour
     private Transform originalAnchor;
 
     private TextMeshPro statusText;
+    private Vector3 initialScale;
+    private Vector3 baseScale;
 
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         statusText = GetComponentInChildren<TextMeshPro>();
         originalAnchor = transform.parent;
+        initialScale = transform.localScale;
+        Debug.LogWarning($"Initial scale: {initialScale}");
     }
 
     public void Hover(bool state)
@@ -49,7 +51,8 @@ public class EyeInteractable : MonoBehaviour
         IsHovered = state;
     }
 
-    public void Select(bool state, Transform anchor = null) {
+    public void Select(bool state, Transform anchor = null) 
+    {
         IsSelected = state;
         if (anchor) {
             transform.SetParent(anchor);
@@ -58,6 +61,17 @@ public class EyeInteractable : MonoBehaviour
             transform.SetParent(originalAnchor);
         }
     }
+
+    public void Resize(float ratio) 
+    {
+        transform.localScale = baseScale * ratio;
+    }
+
+    public void SetBaseScale() 
+    {
+        baseScale = transform.localScale;
+    }
+
 
     void Update()
     { 

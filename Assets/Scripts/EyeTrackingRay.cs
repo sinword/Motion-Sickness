@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using Oculus.Interaction.Input;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -17,26 +15,32 @@ public class EyeTrackingRay : MonoBehaviour
     private LayerMask layersToInclude;
 
     [SerializeField]
-    private Color rayColorDefautState = Color.yellow;
+    private Color rayColorDefaultState = Color.yellow;
 
     [SerializeField]
     private Color rayColorHoverState = Color.red;
 
     [SerializeField]
-    private OVRHand handUsedForPinchSelection;
+    private OVRHand mainHand;
 
     [SerializeField]
-    private bool mockHandUsedForPinchSelection;
+    private OVRHand secondaryHand;
+
+    [SerializeField]
+    private bool mockMainHand;
 
     private bool intercepting;
 
     private bool allowPinchSelection;
+    private bool allowResize;
 
     private LineRenderer lineRenderer;
 
     private Dictionary<int, EyeInteractable> interactables = new Dictionary<int, EyeInteractable>();
 
     private EyeInteractable lastEyeInteractable;
+    private float initialPinchDistance;
+    private bool isResizing;
 
     void Start()
     {
@@ -47,7 +51,7 @@ public class EyeTrackingRay : MonoBehaviour
             return;
         }
         layersToInclude = LayerMask.GetMask("EyeInteractable");
-        allowPinchSelection = handUsedForPinchSelection != null;
+        allowPinchSelection = mainHand != null && secondaryHand != null;
         SetupRay();
     }
 
@@ -57,10 +61,10 @@ public class EyeTrackingRay : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.startWidth = rayWidth;
         lineRenderer.endWidth = rayWidth;
-        lineRenderer.startColor = rayColorDefautState;
-        lineRenderer.endColor = rayColorDefautState;
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, new Vector3(transform.position.x, transform.position.y, transform.position.z + rayDistance));
+        lineRenderer.startColor = rayColorDefaultState;
+        lineRenderer.endColor = rayColorDefaultState;
+        lineRenderer.SetPosition(0, Vector3.zero);
+        lineRenderer.SetPosition(1, new Vector3(0, 0, rayDistance));
     }
 
     private void Update()
@@ -72,9 +76,17 @@ public class EyeTrackingRay : MonoBehaviour
         // Clear all hover states
         if (!intercepting)
         {
-            lineRenderer.startColor = lineRenderer.endColor = rayColorDefautState;
-            lineRenderer.SetPosition(1, new Vector3(0, 0, transform.position.z + rayDistance));
+            lineRenderer.startColor = lineRenderer.endColor = rayColorDefaultState;
+            lineRenderer.SetPosition(1, new Vector3(0, 0, rayDistance));
             OnHoverEnded();
+        }
+
+        if (IsResizing())
+        {
+            ResizeInteractable();
+        }
+        else {
+            isResizing = false;
         }
     }
 
@@ -82,13 +94,25 @@ public class EyeTrackingRay : MonoBehaviour
     {
         if (intercepting && IsPinching())
         {
-            lastEyeInteractable?.Select(true, (handUsedForPinchSelection?.IsTracked ?? false) ? handUsedForPinchSelection.transform : transform);
+            Transform pinchingHandTransform = null;
+
+            if (mainHand != null && mainHand.IsTracked && mainHand.GetFingerIsPinching(OVRHand.HandFinger.Index))
+            {
+                pinchingHandTransform = mainHand.transform;
+            }
+            else if (secondaryHand != null && secondaryHand.IsTracked && secondaryHand.GetFingerIsPinching(OVRHand.HandFinger.Index))
+            {
+                pinchingHandTransform = secondaryHand.transform;
+            }
+
+            lastEyeInteractable?.Select(true, pinchingHandTransform ?? transform);
         }
         else
         {
             lastEyeInteractable?.Select(false);
         }
     }
+
 
     void FixedUpdate()
     {
@@ -157,6 +181,38 @@ public class EyeTrackingRay : MonoBehaviour
 
     private bool IsPinching()
     {
-        return (allowPinchSelection && handUsedForPinchSelection != null && handUsedForPinchSelection.GetFingerIsPinching(OVRHand.HandFinger.Index)) || mockHandUsedForPinchSelection;
+        bool mainHandIsPinching = mainHand != null && mainHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        bool secondaryHandIsPinching = secondaryHand != null && secondaryHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        return (allowPinchSelection && (mainHandIsPinching || secondaryHandIsPinching)) || mockMainHand;
+    }
+
+    private bool IsResizing()
+    {
+        // Use two hands pinch to resize
+        bool mainHandIsPinching = mainHand != null && mainHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        bool secondaryHandIsPinching = secondaryHand != null && secondaryHand.GetFingerIsPinching(OVRHand.HandFinger.Index);
+        bool currentlyResizing = allowPinchSelection && mainHandIsPinching && secondaryHandIsPinching;
+
+        if (currentlyResizing && !isResizing)
+        {
+            // Initalize resizing
+            initialPinchDistance = Vector3.Distance(mainHand.transform.position, secondaryHand.transform.position);
+            lastEyeInteractable?.SetBaseScale();
+            isResizing = true;
+        }
+
+        return currentlyResizing;
+    }
+
+    private void ResizeInteractable()
+    {
+        if (lastEyeInteractable && isResizing)
+        {
+            Vector3 mainHandPosition = mainHand.transform.position;
+            Vector3 secondaryHandPosition = secondaryHand.transform.position;
+            float currentDistance = Vector3.Distance(mainHandPosition, secondaryHandPosition);
+            float ratio = currentDistance / initialPinchDistance;
+            lastEyeInteractable.Resize(ratio);
+        }
     }
 }
