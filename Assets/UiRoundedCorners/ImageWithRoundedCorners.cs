@@ -9,7 +9,7 @@ namespace Nobi.UiRoundedCorners {
 		private static readonly int Props = Shader.PropertyToID("_WidthHeightRadius");
 		private static readonly int prop_OuterUV = Shader.PropertyToID("_OuterUV");
 
-		public float radius = 40f;
+		public float radius = 15f;
 		private Material material;
 		private Vector4 outerUV = new Vector4(0, 0, 1, 1);
 
