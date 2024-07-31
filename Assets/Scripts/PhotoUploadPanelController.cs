@@ -15,11 +15,16 @@ public class PhotoUploadPanelController : MonoBehaviour
     private Button uploadButton;
 
     private Button[][] photoButtons = new Button[5][];
-    private string pathToImages = "ImageEditor/Images";
+    private string pathToImages = "ImageEditor/Images"; 
+    // Create a event handler for upload button click
+    public delegate void UploadButtonClicked();
+    public static event UploadButtonClicked OnUploadButtonClicked;
+    private PhotoEditorGameController photoEditorGameController;
 
     void Start()
     {   
-        
+        photoEditorGameController = FindObjectOfType<PhotoEditorGameController>();
+
         // Load the images from the Resource folder
         int count = 1;
         for (int i = 0; i < 5; i++)
@@ -64,26 +69,20 @@ public class PhotoUploadPanelController : MonoBehaviour
     }
 
     // Print the image name and turn the button color to blue
-    public void OnPhotoButtonClick()
+    public void OnPhotoButtonClick(Button clickedButton)
     {
-        Debug.Log("Photo button clicked");
-        // Get image from the button itself
-        Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-        // Enable the text under the button
-        Debug.LogWarning("Image name: " + clickedButton.image.sprite.name);
-        // After any button is clicked, change the color of the upload button to blue
-        // Blue color(0.035f, 0.521f, 0.972f, 1.0f);
+        Debug.LogWarning("Image name: " + clickedButton.image.sprite.name);       
         ColorBlock colorBlock = uploadButton.colors;
         colorBlock.normalColor = new Color(0.035f, 0.521f, 0.972f, 1.0f);
         uploadButton.colors = colorBlock;
-            
+        photoEditorGameController.SetSelectedPhoto(clickedButton.image.sprite);
     }
 
     public void OnUploadButtonClick()
     {
         Debug.LogWarning("Upload button clicked");
         // Upload the selected image
+        OnUploadButtonClicked?.Invoke();    
     }
 
 }
-    
