@@ -16,7 +16,7 @@ public enum state
     Pause
 }
 
-public class Task1GameController : MonoBehaviour
+public class TaskGameController : MonoBehaviour
 {
     [SerializeField]
     private GameObject interactableCube;
@@ -58,7 +58,7 @@ public class Task1GameController : MonoBehaviour
                 if (timeLeft <= 0)
                 {
                     report = Evaluation();
-                    Debug.LogWarning(report);
+                    // Debug.LogWarning(report);
                     InteractionPause();
                     timeLeft = pauseTime;
                     state = state.Pause;
