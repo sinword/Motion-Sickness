@@ -19,6 +19,8 @@ public enum state
 public class TaskGameController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject interactionArea;
+    [SerializeField]
     private GameObject interactableCube;
 
     [SerializeField]
@@ -39,12 +41,21 @@ public class TaskGameController : MonoBehaviour
     private float timeLeft;
     private string report;
     private Vector3 interactableCubeInitialScale;
-
+    private float distanceToCenterLow;
+    private float distanceToCenterMedium;
+    private float distanceToCenterHigh;
     void Start()
     {
         timeLeft = roundTime;
         interactableCubeInitialScale = interactableCube.transform.localScale;
         ResetPositions();
+        // 30 degrees FOV
+        distanceToCenterLow = interactionArea.transform.position.z * Mathf.Tan(15 * Mathf.Deg2Rad);
+        // 60 degrees FOV
+        distanceToCenterMedium = interactionArea.transform.position.z * Mathf.Tan(30 * Mathf.Deg2Rad);
+        // 90 degrees FOV
+        distanceToCenterHigh = interactionArea.transform.position.z * Mathf.Tan(45 * Mathf.Deg2Rad);
+        
     }
 
     // Update is called once per frame
@@ -58,7 +69,7 @@ public class TaskGameController : MonoBehaviour
                 if (timeLeft <= 0)
                 {
                     report = Evaluation();
-                    // Debug.LogWarning(report);
+                    Debug.LogWarning(report);
                     InteractionPause();
                     timeLeft = pauseTime;
                     state = state.Pause;
@@ -79,19 +90,23 @@ public class TaskGameController : MonoBehaviour
     private void ResetPositions()
     {
         float distanceToCenter = 0f;
+        float minDistanceBetweenCubes = 0f;
         interactableCube.SetActive(true);
         targetCube.SetActive(true);
 
         switch (taskRange)
         {
             case TaskRange.Low:
-                distanceToCenter = 0.25f;
+                distanceToCenter = distanceToCenterLow;
+                minDistanceBetweenCubes = distanceToCenterLow;
                 break;
             case TaskRange.Medium:
-                distanceToCenter = 0.6f;
+                distanceToCenter = distanceToCenterMedium;
+                minDistanceBetweenCubes = distanceToCenterMedium;
                 break;
             case TaskRange.High:
-                distanceToCenter = 0.9f;
+                distanceToCenter = distanceToCenterHigh;
+                minDistanceBetweenCubes = distanceToCenterHigh;
                 break;
         }
 
@@ -99,12 +114,11 @@ public class TaskGameController : MonoBehaviour
         // The Euclidean distance between the cubes and the center of the circle should be less than distanceToCenter
         // The cubes should not overlap
 
-        Vector3 interactableCubeLocalPos = GetRandomPositionWithinCircle(distanceToCenter);
+        Vector3 interactableCubeLocalPos = GetRandomPositionWithinCircle(taskRange, distanceToCenter);
         Vector3 targetCubeLocalPos;
-        float minDistanceBetweenCubes = 0.25f;
         do
         {
-            targetCubeLocalPos = GetRandomPositionWithinCircle(distanceToCenter);
+            targetCubeLocalPos = GetRandomPositionWithinCircle(taskRange, distanceToCenter);
         } while (Vector3.Distance(interactableCubeLocalPos, targetCubeLocalPos) <= minDistanceBetweenCubes);
 
         interactableCube.transform.localPosition = interactableCubeLocalPos;
@@ -117,15 +131,40 @@ public class TaskGameController : MonoBehaviour
         outline.GetComponent<DottedOutline>().Sketch();
     }
 
-    private Vector3 GetRandomPositionWithinCircle(float radius)
+    private Vector3 GetRandomPositionWithinCircle(TaskRange taskRange, float radius)
     {
-        float x, y, distance;
+        
+        float x = 0;
+        float y = 0;
+        float distance;
+        int xMultiplier, yMultiplier;
         do
         {
-            x = Random.Range(-radius, radius);
-            y = Random.Range(-radius, radius);
+            switch (taskRange)
+            {
+                case TaskRange.Low:
+                    x = Random.Range(-1 * distanceToCenterLow, distanceToCenterLow);
+                    y = Random.Range(-1 * distanceToCenterLow, distanceToCenterLow);
+                    break;
+                case TaskRange.Medium:
+                    x = Random.Range(-1 * distanceToCenterMedium, distanceToCenterMedium);
+                    xMultiplier = Random.Range(0,2) * 2 - 1;
+                    x *= xMultiplier;
+                    y = Random.Range(-1 * distanceToCenterMedium, distanceToCenterMedium);
+                    yMultiplier = Random.Range(0,2) * 2 - 1;
+                    y *= yMultiplier;
+                    break;
+                case TaskRange.High:
+                    x = Random.Range(-1 * distanceToCenterHigh, distanceToCenterHigh);
+                    xMultiplier = Random.Range(0, 2) * 2 - 1;
+                    x *= xMultiplier;
+                    y = Random.Range(-1 * distanceToCenterHigh, distanceToCenterHigh);
+                    yMultiplier = Random.Range(0, 2) * 2 - 1;
+                    y *= yMultiplier;
+                    break;
+            }
             distance = Mathf.Sqrt(x * x + y * y);
-        } while (distance > radius);
+            } while (distance > radius);
         return new Vector3(x, y, 0);
     }
 
@@ -158,3 +197,4 @@ public class TaskGameController : MonoBehaviour
         return evaluation;
     }
 }
+
