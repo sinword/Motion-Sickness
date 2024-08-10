@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum TaskDistance
+{
+    Sixty,
+    Eighty
+}
+
 public enum TaskRange
 {
     Low,
@@ -10,7 +16,7 @@ public enum TaskRange
     High
 }
 
-public enum state
+public enum State
 {
     Interation,
     Pause
@@ -18,6 +24,8 @@ public enum state
 
 public class TaskGameController : MonoBehaviour
 {
+    [SerializeField]
+    private TaskDistance taskDistance;
     [SerializeField]
     private GameObject interactionArea;
     [SerializeField]
@@ -27,7 +35,7 @@ public class TaskGameController : MonoBehaviour
     private GameObject targetCube;
 
     [SerializeField]
-    private TextMeshProUGUI timeText;
+    private TextMeshProUGUI timeText;   
 
     // Select task bar
     [SerializeField]
@@ -37,13 +45,26 @@ public class TaskGameController : MonoBehaviour
     private float roundTime = 5f;
     [SerializeField]
     private float pauseTime = 1f;
-    private state state = state.Interation;
+    private State state = State.Interation;
     private float timeLeft;
     private string report;
     private Vector3 interactableCubeInitialScale;
     private float distanceToCenterLow;
     private float distanceToCenterMedium;
     private float distanceToCenterHigh;
+
+    void Awake()
+    {
+        switch (taskDistance)
+        {
+            case TaskDistance.Sixty:
+                interactionArea.transform.position = new Vector3(0, 1, 0.4243f);
+                break;
+            case TaskDistance.Eighty:
+                interactionArea.transform.position = new Vector3(0, 1, 0.5657f);
+                break;
+        }
+    }
     void Start()
     {
         timeLeft = roundTime;
@@ -65,22 +86,22 @@ public class TaskGameController : MonoBehaviour
         timeText.text = ((int)timeLeft).ToString();
         switch (state)
         {
-            case state.Interation:
+            case State.Interation:
                 if (timeLeft <= 0)
                 {
                     report = Evaluation();
                     Debug.LogWarning(report);
                     InteractionPause();
                     timeLeft = pauseTime;
-                    state = state.Pause;
+                    state = State.Pause;
                 }
                 break;
-            case state.Pause:
+            case State.Pause:
                 if (timeLeft <= 0)
                     {
                         ResetPositions();
                         timeLeft = roundTime;
-                        state = state.Interation;
+                        state = State.Interation;
                     }
                     break;
         }
@@ -198,3 +219,22 @@ public class TaskGameController : MonoBehaviour
     }
 }
 
+/*
+Version 1
+To the outer circle 60 cm
+Theta1 = 15 degrees
+Distance to the center of the circle = 60 * sin(15) = 15.52 cm
+Theta2 = 30 degrees
+Distance to the center of the circle = 60 * sin(30) = 30 cm
+Theta3 = 45 degrees
+Distance to the center of the circle = 60 * sin(45) = 42.42 cm
+
+Version 2
+To the outer circle 80 cm
+Theta1 = 15 degrees
+Distance to the center of the circle = 80 * sin(15) = 20.69 cm
+Theta2 = 30 degrees
+Distance to the center of the circle = 80 * sin(30) = 40 cm
+Theta3 = 45 degrees
+Distance to the center of the circle = 80 * sin(45) = 56.57 cm
+*/
