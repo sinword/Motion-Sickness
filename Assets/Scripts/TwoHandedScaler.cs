@@ -7,6 +7,7 @@ public class TwoHandedScaler : MonoBehaviour
     public Hand rightHandComponent;
     public Transform leftHandPosition;
     public Transform rightHandPosition;
+    public float scaleSpeed = 1.0f;
 
     private Vector3 initialScale;
     private float initialDistance;
@@ -47,6 +48,6 @@ public class TwoHandedScaler : MonoBehaviour
     {
         float currentDistance = Vector3.Distance(leftHandPosition.position, rightHandPosition.position);
         float scaleFactor = currentDistance / initialDistance;
-        transform.localScale = initialScale * scaleFactor;
+        transform.localScale = initialScale * scaleFactor * scaleSpeed;
     }
 }

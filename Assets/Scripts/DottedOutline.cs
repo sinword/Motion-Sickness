@@ -4,28 +4,36 @@ using UnityEngine;
 public class DottedOutline : MonoBehaviour
 {
     public Transform cubeTransform;
+    private LineRenderer lineRenderer;
+
+    private void Start()
+    {
+        // Initialize and configure LineRenderer
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.loop = false;  // Do not loop the line
+        lineRenderer.useWorldSpace = false; // Use local space since the GameObject is parented under the cube
+        lineRenderer.positionCount = 16; // Update to 16 since we need to draw the entire outline
+        
+        // Call the function to sketch the outline
+        Sketch();
+    }
 
     public void Sketch()
     {
-        LineRenderer lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 16;
-
         Vector3[] positions = new Vector3[lineRenderer.positionCount];
-        Vector3 cubeSize = cubeTransform.localScale / 2.0f;
+        float length = 0.5f;
 
-        // Top face corners
-        Vector3 topFrontLeft = cubeTransform.position + new Vector3(-cubeSize.x, cubeSize.y, -cubeSize.z);
-        Vector3 topFrontRight = cubeTransform.position + new Vector3(cubeSize.x, cubeSize.y, -cubeSize.z);
-        Vector3 topBackRight = cubeTransform.position + new Vector3(cubeSize.x, cubeSize.y, cubeSize.z);
-        Vector3 topBackLeft = cubeTransform.position + new Vector3(-cubeSize.x, cubeSize.y, cubeSize.z);
+        // Calculate the corner positions in the local space of the cube
+        Vector3 topFrontLeft = new Vector3(-length, length, length);
+        Vector3 topFrontRight = new Vector3(length, length, length);
+        Vector3 topBackRight = new Vector3(length, length, -length);
+        Vector3 topBackLeft = new Vector3(-length, length, -length);
+        Vector3 bottomFrontLeft = new Vector3(-length, -length, length);
+        Vector3 bottomFrontRight = new Vector3(length, -length, length);
+        Vector3 bottomBackRight = new Vector3(length, -length, -length);
+        Vector3 bottomBackLeft = new Vector3(-length, -length, -length);
 
-        // Bottom face corners
-        Vector3 bottomFrontLeft = cubeTransform.position + new Vector3(-cubeSize.x, -cubeSize.y, -cubeSize.z);
-        Vector3 bottomFrontRight = cubeTransform.position + new Vector3(cubeSize.x, -cubeSize.y, -cubeSize.z);
-        Vector3 bottomBackRight = cubeTransform.position + new Vector3(cubeSize.x, -cubeSize.y, cubeSize.z);
-        Vector3 bottomBackLeft = cubeTransform.position + new Vector3(-cubeSize.x, -cubeSize.y, cubeSize.z);
-
-        // sketch the outline of the cube
+        // Assign positions for the outline of the cube in local space
         positions[0] = topFrontLeft;
         positions[1] = topFrontRight;
         positions[2] = topBackRight;

@@ -59617,6 +59617,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7743476194104231639}
     - target: {fileID: 6107098465716677127, guid: b477625c37578f941b004b1a28470140, type: 3}
+      propertyPath: mainHand
+      value: 
+      objectReference: {fileID: 7655540130661182240}
+    - target: {fileID: 6107098465716677127, guid: b477625c37578f941b004b1a28470140, type: 3}
+      propertyPath: secondaryHand
+      value: 
+      objectReference: {fileID: 7993227699996515241}
+    - target: {fileID: 6107098465716677127, guid: b477625c37578f941b004b1a28470140, type: 3}
       propertyPath: handUsedForPinchSelection
       value: 
       objectReference: {fileID: 7655540130661182240}
@@ -59686,6 +59694,14 @@ PrefabInstance:
       propertyPath: ReferenceFrame
       value: 
       objectReference: {fileID: 7743476194104231639}
+    - target: {fileID: 6107098465716677127, guid: b477625c37578f941b004b1a28470140, type: 3}
+      propertyPath: mainHand
+      value: 
+      objectReference: {fileID: 7655540130661182240}
+    - target: {fileID: 6107098465716677127, guid: b477625c37578f941b004b1a28470140, type: 3}
+      propertyPath: secondaryHand
+      value: 
+      objectReference: {fileID: 7993227699996515241}
     - target: {fileID: 6107098465716677127, guid: b477625c37578f941b004b1a28470140, type: 3}
       propertyPath: handUsedForPinchSelection
       value: 

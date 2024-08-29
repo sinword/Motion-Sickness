@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 4108171890191532308}
   - component: {fileID: 6453559463613677414}
   m_Layer: 3
-  m_Name: EyeInteractable
+  m_Name: EyeInteractable Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
