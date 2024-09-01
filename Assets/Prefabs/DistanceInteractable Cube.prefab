@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 1112899360720619602}
   - component: {fileID: 264542459716511720}
   m_Layer: 0
-  m_Name: Distance Interactable Cube
+  m_Name: DistanceInteractable Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

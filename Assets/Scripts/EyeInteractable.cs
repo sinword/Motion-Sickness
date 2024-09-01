@@ -20,30 +20,54 @@ public class EyeInteractable : MonoBehaviour
     [SerializeField]
     private UnityEvent<GameObject> OnObjectSelected;
 
-    [SerializeField]
-    private Material OnHoverActiveMaterial;
+    // [SerializeField]
+    // private Material OnHoverActiveMaterial;
+
+    // [SerializeField]
+    // private Material OnSelectedActiveMaterial;
+
+    // [SerializeField]
+    // private Material OnIdleMaterial;
 
     [SerializeField]
-    private Material OnSelectedActiveMaterial;
-
-    [SerializeField]
-    private Material OnIdleMaterial;
+    public UnityEvent<GameObject> OnSelectionChanged;
 
     private MeshRenderer meshRenderer;
 
     private Transform originalAnchor;
 
-    private TextMeshPro statusText;
+    // private TextMeshPro statusText;
     private Vector3 initialScale;
     private Vector3 baseScale;
-
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        statusText = GetComponentInChildren<TextMeshPro>();
+        // statusText = GetComponentInChildren<TextMeshPro>();
         originalAnchor = transform.parent;
         initialScale = transform.localScale;
         Debug.LogWarning($"Initial scale: {initialScale}");
+
+    }
+    
+    void Update()
+    { 
+        if (IsHovered)
+        {
+            OnObjectHover?.Invoke(gameObject);
+            // meshRenderer.material = OnHoverActiveMaterial;
+            // statusText.text = $"<color=\"yellow\">HOVERED</color>";
+        }
+        if (IsSelected)
+        {
+            OnObjectSelected?.Invoke(gameObject);
+            // meshRenderer.material = OnSelectedActiveMaterial;
+            // statusText.text = $"<color=\"yellow\">SELECTED</color>";
+        }
+        // if (!IsHovered && !IsSelected)
+        // {
+        //     meshRenderer.material = OnIdleMaterial;
+        //     statusText.text = $"<color=\"yellow\">IDLE</color>";
+        // }
     }
 
     public void Hover(bool state)
@@ -54,6 +78,8 @@ public class EyeInteractable : MonoBehaviour
     public void Select(bool state, Transform anchor = null) 
     {
         IsSelected = state;
+        OnSelectionChanged?.Invoke(gameObject);
+        
         if (anchor) {
             transform.SetParent(anchor);
         }
@@ -72,25 +98,4 @@ public class EyeInteractable : MonoBehaviour
         baseScale = transform.localScale;
     }
 
-
-    void Update()
-    { 
-        if (IsHovered)
-        {
-            meshRenderer.material = OnHoverActiveMaterial;
-            OnObjectHover?.Invoke(gameObject);
-            statusText.text = $"<color=\"yellow\">HOVERED</color>";
-        }
-        if (IsSelected)
-        {
-            OnObjectSelected?.Invoke(gameObject);
-            meshRenderer.material = OnSelectedActiveMaterial;
-            statusText.text = $"<color=\"yellow\">SELECTED</color>";
-        }
-        if (!IsHovered && !IsSelected)
-        {
-            meshRenderer.material = OnIdleMaterial;
-            statusText.text = $"<color=\"yellow\">IDLE</color>";
-        }
-    }
 }

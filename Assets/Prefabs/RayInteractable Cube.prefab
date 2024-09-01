@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 910272116050040670}
   - component: {fileID: 5406166748174614138}
   m_Layer: 0
-  m_Name: Ray Interactable Cube
+  m_Name: RayInteractable Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

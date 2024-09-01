@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Reflection;
 using Oculus.Interaction.Input;
 using UnityEngine;
+using Oculus.Interaction.DistanceReticles;
 
 [RequireComponent(typeof(LineRenderer))]
+
 public class EyeTrackingRay : MonoBehaviour
 {
     [SerializeField]
@@ -28,7 +31,8 @@ public class EyeTrackingRay : MonoBehaviour
 
     [SerializeField]
     private bool mockMainHand;
-
+    [SerializeField]
+    private ReticleIconDrawer reticleIconDrawer;
     private bool intercepting;
 
     private bool allowPinchSelection;
@@ -42,6 +46,11 @@ public class EyeTrackingRay : MonoBehaviour
     private float initialPinchDistance;
     private bool isResizing;
 
+    // MethodInfo for the protected methods
+    private MethodInfo drawMethod;
+    private MethodInfo hideMethod;
+    private ReticleDataIcon reticleDataIcon;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -53,6 +62,24 @@ public class EyeTrackingRay : MonoBehaviour
         layersToInclude = LayerMask.GetMask("EyeInteractable");
         allowPinchSelection = mainHand != null && secondaryHand != null;
         SetupRay();
+
+        // Use reflection to get access to the protected methods
+        drawMethod = typeof(ReticleIconDrawer).GetMethod("Draw", BindingFlags.Instance | BindingFlags.NonPublic);
+        hideMethod = typeof(ReticleIconDrawer).GetMethod("Hide", BindingFlags.Instance | BindingFlags.NonPublic);
+        
+        if (drawMethod == null || hideMethod == null)
+        {
+            Debug.LogError("Failed to access the protected methods using reflection.");
+        }
+
+        reticleDataIcon = new ReticleDataIcon();
+        reticleDataIcon.CustomIcon = reticleIconDrawer.DefaultIcon;
+
+        // Subscribe to selection changed events
+        foreach (var interactable in interactables)
+        {
+            interactable.Value.OnSelectionChanged.AddListener(OnObjectSelected);
+        }
     }
 
     void SetupRay()
@@ -144,6 +171,15 @@ public class EyeTrackingRay : MonoBehaviour
                 eyeInteractable.Hover(true);
 
                 lastEyeInteractable = eyeInteractable;
+
+                // Use reflection to invoke the Draw method
+                if (drawMethod != null)
+                {
+                    // Set reticle position to the 3D center of the object
+                    reticleIconDrawer.transform.position = eyeInteractable.GetComponent<Collider>().bounds.center;
+                    reticleIconDrawer.transform.forward = -rayDirection.normalized;
+                    drawMethod.Invoke(reticleIconDrawer, new object[] { reticleDataIcon });
+                }
             }
             else
             {
@@ -156,6 +192,10 @@ public class EyeTrackingRay : MonoBehaviour
         else
         {
             Debug.Log("No object hit by Raycast");
+            if (hideMethod != null)
+            {
+                hideMethod.Invoke(reticleIconDrawer, null); // Use reflection to invoke the Hide method
+            }
         }
     }
 
@@ -172,12 +212,32 @@ public class EyeTrackingRay : MonoBehaviour
                 Debug.LogWarning("Null EyeInteractable in interactable dictionary!");
             }
         }
+        
+        // Hide the reticle when no object is hovered
+        if (hideMethod != null)
+        {
+            hideMethod.Invoke(reticleIconDrawer, null);
+        }
+    }
+
+    // Method to handle selection change
+    public void OnObjectSelected(GameObject obj)
+    {
+        if (obj.TryGetComponent(out EyeInteractable interactable))
+        {
+            if (interactable.IsSelected && hideMethod != null)
+            {
+                // Hide reticle when object is selected
+                hideMethod.Invoke(reticleIconDrawer, null); 
+            }
+        }
     }
 
     private void OnDestroy()
     {
         interactables.Clear();
     }
+    
 
     private bool IsPinching()
     {
