@@ -8,6 +8,8 @@ using UnityEngine.Events;
 
 public class EyeInteractable : MonoBehaviour
 {
+    [SerializeField]
+    private bool is2DTask = false;
     [field: SerializeField]
     public bool IsHovered { get; private set; }
     
@@ -39,18 +41,26 @@ public class EyeInteractable : MonoBehaviour
     // private TextMeshPro statusText;
     private Vector3 initialScale;
     private Vector3 baseScale;
+
+    // Variables to store initial rotation and Z position
+    private Quaternion initialRotation;
+    private float lockedZPosition;
+
     private void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         // statusText = GetComponentInChildren<TextMeshPro>();
         originalAnchor = transform.parent;
         initialScale = transform.localScale;
+        initialRotation = transform.rotation;
+        lockedZPosition = 0.6f;
         Debug.LogWarning($"Initial scale: {initialScale}");
 
     }
     
     void Update()
     { 
+        
         if (IsHovered)
         {
             OnObjectHover?.Invoke(gameObject);
@@ -60,14 +70,18 @@ public class EyeInteractable : MonoBehaviour
         if (IsSelected)
         {
             OnObjectSelected?.Invoke(gameObject);
+
+            // Lock rotation
+            transform.rotation = initialRotation;
+            if (is2DTask)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, lockedZPosition);
+            }
+
+            
             // meshRenderer.material = OnSelectedActiveMaterial;
             // statusText.text = $"<color=\"yellow\">SELECTED</color>";
-        }
-        // if (!IsHovered && !IsSelected)
-        // {
-        //     meshRenderer.material = OnIdleMaterial;
-        //     statusText.text = $"<color=\"yellow\">IDLE</color>";
-        // }
+        }   
     }
 
     public void Hover(bool state)

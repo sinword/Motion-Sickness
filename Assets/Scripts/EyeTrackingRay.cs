@@ -108,13 +108,13 @@ public class EyeTrackingRay : MonoBehaviour
             OnHoverEnded();
         }
 
-        if (IsResizing())
-        {
-            ResizeInteractable();
-        }
-        else {
-            isResizing = false;
-        }
+        // if (IsResizing())
+        // {
+        //     ResizeInteractable();
+        // }
+        // else {
+        //     isResizing = false;
+        // }
     }
 
     private void SelectionStarted()
