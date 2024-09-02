@@ -77,7 +77,6 @@ public class EyeInteractable : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y, lockedZPosition);
             }
-
             
             // meshRenderer.material = OnSelectedActiveMaterial;
             // statusText.text = $"<color=\"yellow\">SELECTED</color>";
@@ -96,6 +95,7 @@ public class EyeInteractable : MonoBehaviour
         
         if (anchor) {
             transform.SetParent(anchor);
+            Debug.LogWarning($"Parented to {anchor.name}");
         }
         if (!IsSelected) {
             transform.SetParent(originalAnchor);
